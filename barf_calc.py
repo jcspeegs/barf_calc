@@ -28,8 +28,8 @@ class Food:
                              'organ': 1.},
                }
 
-    # Collects Food objects
-    _registry = {}
+    # Collection of Food objects
+    _registry = []
 
     # Track total weight by category
     _total_wt = {'weight': 0., 'bone': 0., 'meat': 0., 'vege': 0., 'fruit': 0.,
@@ -72,7 +72,7 @@ class Food:
         ''' Print complete meal information'''
         print('\nIngredients')
         # individual items
-        for i, v in enumerate(cls._registry.values()):
+        for i, v in enumerate(cls._registry):
             print(f'\t{i}) {v}')
         print()
         # Meal mix by category
@@ -104,10 +104,11 @@ class Food:
         # Create instance name as: <preset-id><instance-id>
         cls_name = list(cls.presets.keys())[response]+str(len(cls._registry))
 
-        cls._registry[cls_name] = cls(weight, **config)
+        obj = cls(weight, **config)
+        cls._registry.append(obj)
 
         # Update totals
-        cls._total_wt = cls._registry[cls_name].update_total(cls._total_wt)
+        cls._total_wt = obj.update_total(cls._total_wt)
 
     def update_total(self, _total: dict):
         ''' _total is a dictionary tracking meal mix by category'''
