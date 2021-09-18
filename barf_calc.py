@@ -12,34 +12,33 @@ class Food:
     vege: percent of vegetables in Food
     '''
 
-    presets = {'chwhl': {'description': 'Chicken: Whole (no organs)',
-                         'bone': 0.32},
-               'chdrum': {'description': 'Chicken: Drumsticks',
-                          'bone': 0.27},
-               'fruit': {'description': 'Fruit',
-                         'fruit': 1.},
-               'vege': {'description': 'Vegetables',
-                        'vege': 1.},
-               'orgchlvr': {'description': 'Organs: Chicken Liver',
-                            'organ': 1.},
-               'orgbflvr': {'description': 'Organs: Beef Liver',
-                            'organ': 1.},
-               'orgchgiz': {'description': 'Organs: Chicken Hearts & Gizzards',
-                            'organ': 1.},
+    presets = {'chwhl':     {'description': 'Chicken: Whole (no organs)',
+                             'bone': 0.32, 'meat': 0.68},
+               'chdrum':    {'description': 'Chicken: Drumsticks',
+                             'bone': 0.27, 'meat': 0.73},
+               'meat':      {'description': 'Pure meat', 'meat': 1.},
+               'fruit':     {'description': 'Fruit', 'fruit': 1.},
+               'vege':      {'description': 'Vegetables', 'vege': 1.},
+               'orgchlvr':  {'description': 'Organs: Chicken Liver',
+                             'organ': 1.},
+               'orgbflvr':  {'description': 'Organs: Beef Liver',
+                             'organ': 1.},
+               'orgchgiz':  {'description': 'Organs: Chicken Hearts & Gizzards',
+                             'organ': 1.},
                }
 
     _registry = {}
     _total_wt = {'weight': 0., 'bone': 0., 'meat': 0., 'vege': 0., 'fruit': 0.,
                  'organ': 0.}
 
-    def __init__(self, weight: float, description: str, organ: float = 0.,
-                 bone: float = 0., fruit: float = 0., vege: float = 0.):
+    def __init__(self, weight: float, description: str,
+                 organ: float = 0., bone: float = 0., meat: float = 0.,
+                 fruit: float = 0., vege: float = 0.):
         self.weight = weight
         self.description = description
         self._composition = {'organ': organ * weight, 'fruit': fruit * weight,
-                             'vege': vege, 'bone': bone * weight}
-        if bone != 0.:
-            self._composition['meat'] = (1. - bone)*weight
+                             'vege': vege * weight, 'bone': bone * weight,
+                             'meat': meat * weight, }
 
     def __str__(self):
         '''How to display individual food items '''
