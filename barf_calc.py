@@ -13,20 +13,19 @@ class Food:
     organ: percent of organ in food
     '''
 
-    presets = {'chwhl':     {'description': 'Chicken: Whole (no organs)',
-                             'bone': 0.32, 'meat': 0.68},
-               'chdrum':    {'description': 'Chicken: Drumsticks',
-                             'bone': 0.27, 'meat': 0.73},
-               'meat':      {'description': 'Pure meat', 'meat': 1.},
-               'fruit':     {'description': 'Fruit', 'fruit': 1.},
-               'vege':      {'description': 'Vegetables', 'vege': 1.},
-               'orgchlvr':  {'description': 'Organs: Chicken Liver',
-                             'organ': 1.},
-               'orgbflvr':  {'description': 'Organs: Beef Liver',
-                             'organ': 1.},
-               'orgchgiz':  {'description': 'Organs: Chicken Hearts & Gizzards',
-                             'organ': 1.},
-               }
+    presets = [
+        {'description': 'Chicken: Whole (no organs)',
+         'bone': 0.32, 'meat': 0.68},
+        {'description': 'Chicken: Drumsticks',
+         'bone': 0.27, 'meat': 0.73},
+        {'description': 'Pure meat', 'meat': 1.},
+        {'description': 'Fruit', 'fruit': 1.},
+        {'description': 'Vegetables', 'vege': 1.},
+        {'description': 'Organs: Chicken Liver', 'organ': 1.},
+        {'description': 'Organs: Beef Liver', 'organ': 1.},
+        {'description': 'Organs: Chicken Hearts & Gizzards',
+         'organ': 1.},
+    ]
 
     # Collection of Food objects
     _registry = []
@@ -53,7 +52,7 @@ class Food:
     @staticmethod
     def list_presets(presets: dict):
         ''' Print presets '''
-        for i, v in enumerate(presets.values()):
+        for i, v in enumerate(presets):
             description = v['description']
             print(f'\t{i}) {description}')
 
@@ -85,7 +84,7 @@ class Food:
 
         # Get foodtype to add
         response = None
-        while response not in range(len(cls.presets.keys())):
+        while response not in range(len(cls.presets)):
             try:
                 response = int(input('Choose a foodtype to add: '))
             except ValueError:
@@ -100,9 +99,7 @@ class Food:
                 pass
 
         # Get instance config paramters
-        config = list(cls.presets.values())[response]
-        # Create instance name as: <preset-id><instance-id>
-        cls_name = list(cls.presets.keys())[response]+str(len(cls._registry))
+        config = cls.presets[response]
 
         obj = cls(weight, **config)
         cls._registry.append(obj)
