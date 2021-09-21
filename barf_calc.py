@@ -49,10 +49,10 @@ class Food:
                if v != 0.]
         return f'{self.description:34s}|{"|".join(lst)}'
 
-    @staticmethod
-    def list_presets(presets: dict):
+    @classmethod
+    def list_presets(cls):
         ''' Print presets '''
-        for i, v in enumerate(presets):
+        for i, v in enumerate(cls.presets):
             description = v['description']
             print(f'\t{i}) {description}')
 
@@ -67,6 +67,18 @@ class Food:
             print(f'\t{category}:\t{wt[category]/wt["weight"]:>5.1%}')
 
     @classmethod
+    def get_preset(cls) -> int:
+        ''' Get foodtype to add'''
+        response = None
+        while response not in range(len(cls.presets)):
+            try:
+                response = int(input('Choose a foodtype to add: '))
+            except ValueError:
+                pass
+
+        return response
+
+    @classmethod
     def display_meal(cls):
         ''' Print complete meal information'''
         print('\nIngredients')
@@ -78,19 +90,17 @@ class Food:
         cls.display_total_wt(cls._total_wt)
 
     @classmethod
-    def add(cls):
-        '''Add instance of Food using presets'''
-        cls.list_presets(cls.presets)
+    def add(cls, weight: float, config: dict):
+        ''' Add new Food instance'''
+        obj = cls(weight, **config)
+        cls._registry.append(obj)
 
-        # Get foodtype to add
-        response = None
-        while response not in range(len(cls.presets)):
-            try:
-                response = int(input('Choose a foodtype to add: '))
-            except ValueError:
-                pass
+        # Update totals
+        cls._total_wt = obj.update_total(cls._total_wt)
 
-        # Get weight
+    @staticmethod
+    def get_item_weight():
+        ''' Get weight'''
         weight = None
         while weight is None:
             try:
@@ -98,14 +108,7 @@ class Food:
             except Exception:
                 pass
 
-        # Get instance config paramters
-        config = cls.presets[response]
-
-        obj = cls(weight, **config)
-        cls._registry.append(obj)
-
-        # Update totals
-        cls._total_wt = obj.update_total(cls._total_wt)
+        return weight
 
     def update_total(self, _total: dict):
         ''' _total is a dictionary tracking meal mix by category'''
@@ -122,8 +125,17 @@ def barf_calc():
     response = ''
     while not re.fullmatch('^[Qq]$', response):
         response = input(menu+': ')
+
         if re.fullmatch('^[Aa]$', response):
-            Food.add()
+            # Get item type and weight
+            Food.list_presets()
+            preset = Food.get_preset()
+            config = Food.presets[preset]
+            weight = Food.get_item_weight()
+
+            # Add instance of Food
+            Food.add(weight, config)
+
         elif re.fullmatch('^[Ll]$', response):
             Food.display_meal()
 
