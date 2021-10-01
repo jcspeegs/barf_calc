@@ -65,6 +65,16 @@ class Food:
 
         return response
 
+    @staticmethod
+    def get_item_config(presets: list):
+        ''' returns a tuple of: weight, composition'''
+        Food.list_presets(presets)
+        preset = Food.get_preset(presets)
+        config = presets[preset]
+        weight = Food.get_item_weight()
+
+        return weight, config
+
     @classmethod
     def display_meal(cls):
         ''' Print complete meal information'''
@@ -119,17 +129,17 @@ def barf_calc(presets):
         response = input(menu+': ')
 
         if re.fullmatch('^[Aa]$', response):
-            # Get item type and weight
-            Food.list_presets(presets)
-            preset = Food.get_preset(presets)
-            config = presets[preset]
-            weight = Food.get_item_weight()
+            # Get new item config
+            weight, config = Food.get_item_config(presets)
 
             # Add instance of Food
             Food.add(weight, config)
 
         elif re.fullmatch('^[Ll]$', response):
             Food.display_meal()
+
+        elif re.fullmatch('^[Rr]$', response):
+            pass
 
 
 def main():
