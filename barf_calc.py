@@ -93,20 +93,25 @@ class Food:
     def add(cls, weight: float, config: dict):
         ''' Add new Food instance'''
         obj = cls(weight, **config)
+
+        # Update _registry
         cls._registry.append(obj)
 
         # Update totals
         cls._total_wt = obj.update_total(cls._total_wt)
 
     @staticmethod
-    def get_item_weight():
+    def get_item_weight(response=None):
         ''' Get weight'''
         weight = None
         while weight is None:
+            if response is None:
+                response = input('Enter weight in lbs: ')
             try:
-                weight = float(input('Enter weight in lbs: '))
+                weight = float(response)
             except Exception:
-                pass
+                response = None
+                continue
 
         return weight
 
