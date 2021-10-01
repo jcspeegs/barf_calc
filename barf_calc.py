@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import re
+import yaml
 
 
 class Food:
@@ -12,20 +13,6 @@ class Food:
     fruit: percent of fruit in Food
     organ: percent of organ in food
     '''
-
-    presets = [
-        {'description': 'Chicken: Whole (no organs)',
-         'bone': 0.32, 'meat': 0.68},
-        {'description': 'Chicken: Drumsticks',
-         'bone': 0.27, 'meat': 0.73},
-        {'description': 'Pure meat', 'meat': 1.},
-        {'description': 'Fruit', 'fruit': 1.},
-        {'description': 'Vegetables', 'vege': 1.},
-        {'description': 'Organs: Chicken Liver', 'organ': 1.},
-        {'description': 'Organs: Beef Liver', 'organ': 1.},
-        {'description': 'Organs: Chicken Hearts & Gizzards',
-         'organ': 1.},
-    ]
 
     # Collection of Food objects
     _registry = []
@@ -49,10 +36,10 @@ class Food:
                if v != 0.]
         return f'{self.description:34s}|{"|".join(lst)}'
 
-    @classmethod
-    def list_presets(cls):
+    @staticmethod
+    def list_presets(presets: list):
         ''' Print presets '''
-        for i, v in enumerate(cls.presets):
+        for i, v in enumerate(presets):
             description = v['description']
             print(f'\t{i}) {description}')
 
@@ -66,15 +53,15 @@ class Food:
         for category in categories:
             print(f'\t{category}:\t{wt[category]/wt["weight"]:>5.1%}')
 
-    @classmethod
-    def get_preset(cls) -> int:
+    @staticmethod
+    def get_preset(presets: list) -> int:
         ''' Get foodtype to add'''
         response = None
-        while response not in range(len(cls.presets)):
+        while response not in range(len(presets)):
             try:
                 response = int(input('Choose a foodtype to add: '))
             except ValueError:
-                pass
+                continue
 
         return response
 
@@ -124,7 +111,7 @@ class Food:
         return _total
 
 
-def barf_calc():
+def barf_calc(presets):
     menu = '(a)dd, (r)emove, (l)ist, (q)uit'
     print('Welcome to BARFCalc!')
     response = ''
@@ -133,9 +120,9 @@ def barf_calc():
 
         if re.fullmatch('^[Aa]$', response):
             # Get item type and weight
-            Food.list_presets()
-            preset = Food.get_preset()
-            config = Food.presets[preset]
+            Food.list_presets(presets)
+            preset = Food.get_preset(presets)
+            config = presets[preset]
             weight = Food.get_item_weight()
 
             # Add instance of Food
@@ -146,7 +133,11 @@ def barf_calc():
 
 
 def main():
-    barf_calc()
+    config = 'presets.yaml'
+    with open(config, 'r') as fl:
+        presets = yaml.safe_load(fl)
+
+    barf_calc(presets)
 
 
 if __name__ == '__main__':

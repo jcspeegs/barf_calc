@@ -1,0 +1,28 @@
+# Configure meal ingredients to be used in BARFCalc
+#
+# description: String description of food item
+# bone: percent of bone in food
+# meat: percent of meat in food
+# vege: percent of vegetables in Food
+# fruit: percent of fruit in Food
+# organ: percent of organ in food
+#
+
+- description: 'Chicken: Whole (no organs)'
+  bone: 0.32
+  meat: 0.68
+- description: 'Chicken: Drumsticks'
+  bone: 0.27
+  meat: 0.73
+- description: 'Pure meat'
+  meat: 1.
+- description: 'Fruit'
+  fruit: 1.
+- description: 'Vegetables'
+  vege: 1.
+- description: 'Organs: Chicken Liver'
+  organ: 1.
+- description: 'Organs: Beef Liver'
+  organ: 1.
+- description: 'Organs: Chicken Hearts & Gizzards'
+  organ: 1.
