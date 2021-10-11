@@ -9,7 +9,7 @@ from barf_calc import Food
 class TestPresets(unittest.TestCase):
     ''' Test validitiy of presets'''
 
-    def test_presets_validinstance(self):
+    def test_valid_instance(self):
         ''' Test that each preset item creates a valid Food instance'''
         for cfg in Food.presets:
             item = Food(1, **cfg)
@@ -17,7 +17,7 @@ class TestPresets(unittest.TestCase):
 
         del item
 
-    def test_presets_parts(self):
+    def test_sum_of_parts(self):
         ''' Test sum of item composition is 1'''
         for cfg in Food.presets:
             total_pct = 0.
@@ -29,6 +29,16 @@ class TestPresets(unittest.TestCase):
             self.assertEqual(1., total_pct)
 
         del total_pct
+
+    def test_ge0(self):
+        ''' Test no individual component <0'''
+        pass
+
+    def test_get_preset(self):
+        ''' Test get_preset function returns an integer which corresponds to
+            an item in the presets file
+        '''
+        pass
 
 
 class TestAddMethod(unittest.TestCase):
