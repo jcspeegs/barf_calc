@@ -14,6 +14,9 @@
 - description: 'Chicken: Drumsticks'
   bone: 0.27
   meat: 0.73
+- description: 'Chicken: Paws'
+  bone: 0.6
+  meat: 0.4
 - description: 'Pure meat'
   meat: 1.
 - description: 'Fruit'
