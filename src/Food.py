@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-import re
-import yaml
-
-
 class Food:
     '''
     weight: total weight of food
@@ -120,35 +116,3 @@ class Food:
 
         return _total
 
-
-def barf_calc(presets):
-    menu = '(a)dd, (r)emove, (l)ist, (q)uit'
-    print('Welcome to BARFCalc!')
-    response = ''
-    while not re.fullmatch('^[Qq]$', response):
-        response = input(menu+': ')
-
-        if re.fullmatch('^[Aa]$', response):
-            # Get new item config
-            weight, config = Food.get_item_config(presets)
-
-            # Add instance of Food
-            Food.add(weight, config)
-
-        elif re.fullmatch('^[Ll]$', response):
-            Food.display_meal()
-
-        elif re.fullmatch('^[Rr]$', response):
-            pass
-
-
-def main():
-    config = 'presets.yaml'
-    with open(config, 'r') as fl:
-        presets = yaml.safe_load(fl)
-
-    barf_calc(presets)
-
-
-if __name__ == '__main__':
-    main()
