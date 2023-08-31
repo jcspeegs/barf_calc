@@ -16,7 +16,7 @@ class Presets:
     @presets.setter
     def presets(self, value):
         dist_sum = {
-            code: sum([v for v in attributes.values() if type(v) == float])
+            code: sum([v for v in attributes.values() if type(v) is float])
             for code, attributes in value.items()
         }
         for k, v in dist_sum.items():
@@ -26,7 +26,7 @@ class Presets:
         self._ids = list(self._presets.keys())
         for id in self._ids:
             self._presets.get(id).components = Box(
-                {k: v for k, v in self._presets.get(id).items() if type(v) == float}
+                {k: v for k, v in self._presets.get(id).items() if type(v) is float}
             )
 
 

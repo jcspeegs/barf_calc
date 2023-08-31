@@ -22,7 +22,7 @@ def food_type_weight(presets, weight=None, item=None):
     while item not in [str(opt) for opt in range(len(presets.ids))]:
         item = input("Choose a foodtype to add: ")
 
-    while type(weight) != float:
+    while type(weight) is not float:
         try:
             weight = float(input("Enter weight in lbs: "))
         except ValueError:
