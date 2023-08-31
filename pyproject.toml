@@ -1,0 +1,21 @@
+[build-system]
+requires = ['setuptools']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'barf_calc'
+version = '0.1.0'
+dependencies = [
+    'pyYAML',
+    'click',
+    'python-box[all]~=7.0',
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ['barf_calc']
+
+[project.scripts]
+barf-calc = 'barf_calc.scripts.bc:barf_calc'
