@@ -2,8 +2,12 @@
 
 import click
 import yaml
-import Meal
+import barf_calc as bc
 import re
+from importlib.resources import files
+
+
+PRESETS = files('barf_calc').joinpath('presets.yaml')
 
 
 def food_type_weight(presets, weight=None, item=None):
@@ -23,7 +27,7 @@ def food_type_weight(presets, weight=None, item=None):
     return int(item), weight
 
 
-def meal_item(meal: Meal.Meal, item=None) -> int:
+def meal_item(meal: bc.Meal, item=None) -> int:
     click.echo(meal)
     while item not in [str(opt) for opt in range(len(meal.foods))]:
         item = input('Choose item to remove from meal: ')
@@ -32,12 +36,11 @@ def meal_item(meal: Meal.Meal, item=None) -> int:
 
 
 @click.command()
-@click.option('--presets', type=click.File('r'), default='presets.yaml',
+@click.option('--presets', type=click.File('r'), default=PRESETS,
               help='YAML list of food types and their composition')
-def barf_calc(presets, meal: Meal = Meal.Meal()):
+def barf_calc(presets, meal: bc.Meal = bc.Meal()):
     presets = yaml.safe_load(presets)
-    presets = Meal.Presets(presets)
-    meal = Meal.Meal()
+    presets = bc.Presets(presets)
 
     click.echo('Welcome to BARFCalc!')
     menu = '(a)dd, (r)emove, (l)ist, (q)uit'
@@ -48,7 +51,7 @@ def barf_calc(presets, meal: Meal = Meal.Meal()):
         if re.fullmatch('^[Aa]$', response):
             # Add item of Food to meal
             item, weight = food_type_weight(presets)
-            food = Meal.Food(presets, presets.ids[item], weight)
+            food = bc.Food(presets, presets.ids[item], weight)
             meal.add_food(food)
 
         elif re.fullmatch('^[Ll]$', response):
