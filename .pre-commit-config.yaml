@@ -10,3 +10,11 @@ repos:
     rev: 22.10.0
     hooks:
       - id: black
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.1.0
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-bugbear
+          - flake8-comprehensions
+          - flake8-simplify
