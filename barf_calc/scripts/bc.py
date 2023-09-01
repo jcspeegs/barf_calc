@@ -46,9 +46,11 @@ def meal_item(meal: bc.Meal, item=None) -> int:
     default=PRESETS,
     help="YAML list of food types and their composition",
 )
-def barf_calc(presets, meal: bc.Meal = bc.Meal()):
+def barf_calc(presets):
     presets = yaml.safe_load(presets)
     presets = bc.Presets(presets)
+
+    meal = bc.Meal()
 
     click.echo("Welcome to BARFCalc!")
     menu = "(a)dd, (r)emove, (l)ist, (q)uit"

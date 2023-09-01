@@ -84,7 +84,7 @@ class Meal:
         self.components = {
             component: sum(food.components.get(component, 0) for food in self.foods)
             for component in set(
-                component for food in self.foods for component in food.components
+                {component for food in self.foods for component in food.components}
             )
         }
 
