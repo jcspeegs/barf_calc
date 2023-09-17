@@ -9,6 +9,7 @@ dependencies = [
     'pyYAML',
     'click',
     'python-box[all]~=7.0',
+    'streamlit',
 ]
 
 [tool.setuptools]

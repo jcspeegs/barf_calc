@@ -1,4 +1,5 @@
 pre-commit
+streamlit
 pyYAML
 click
 python-box[all]~=7.0
