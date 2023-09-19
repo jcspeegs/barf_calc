@@ -70,7 +70,7 @@ class Meal:
             ingredient_string = "No ingredients added"
         ingredient_string = "\n".join(["Ingredients", ingredient_string])
 
-        weight_string = f"Total Weight: {self.weight} lbs"
+        weight_string = f"Total Weight: {self.weight:,.2f} lbs"
 
         mix_string = "\n".join(
             [f"\t{k}:\t{v/self.weight:>5.1%}" for k, v in self.components.items()]
