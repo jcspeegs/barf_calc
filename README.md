@@ -17,6 +17,8 @@ BARFCalc can be used in three ways:
 ### CLI Application
 
   A [command line utility](barf_calc/scripts/bc.py) is included with installation
+  [![asciicast](https://asciinema.org/a/py6p4FfYyUelojNQpzkddTo6F.svg)](https://asciinema.org/a/py6p4FfYyUelojNQpzkddTo6F)
+  
   
 ### Python barf_calc package
 
